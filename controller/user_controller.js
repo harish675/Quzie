@@ -40,8 +40,7 @@ module.exports.createUser = async function (req,res){
 
             if(!user){
                   await User.create(req.body);
-                  console.log("user created successfully");
-                  console.log(user);
+                  console.log("user created successfully");s
                   return res.redirect('/user/sign-in');
             }
             else{

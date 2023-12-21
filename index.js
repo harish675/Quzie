@@ -6,6 +6,11 @@ const app = express();
 const db = require('./config/mongoose');
 const router = express.Router();
 
+//jwt token
+
+const passport = require('passport');
+const passportJWT = require('./config/passport-jwt-strategy');
+
 
 
 //set the  view engine
