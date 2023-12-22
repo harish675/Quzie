@@ -20,7 +20,13 @@ const userSchema  = new  mongoose.Schema({
       lastName:{
          type:String,
          required:true,
-      }
+      },
+      quizzes: [
+         { type: mongoose.Schema.Types.ObjectId, ref: 'Quiz' }
+      ],
+      scores: [
+         { type: mongoose.Schema.Types.ObjectId, ref: 'Score' }
+      ],
 },{
      timestamps:true,
 });

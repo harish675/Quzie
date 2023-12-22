@@ -2,12 +2,10 @@
 const express = require('express');
 const port = 8000;
 const app = express();
-
 const db = require('./config/mongoose');
 const router = express.Router();
 
 //jwt token
-
 const passport = require('passport');
 const passportJWT = require('./config/passport-jwt-strategy');
 

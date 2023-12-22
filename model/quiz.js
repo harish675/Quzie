@@ -1,22 +1,36 @@
 
 const mongoose = require('mongoose');
+const User = require('./user');
 
-const quizSchema = new mongoose.Schema({
+//questions Schema for creating the question
+const questionSchema = new mongoose.Schema({
      
-    question:{
-         
-        type:String,
-        required:true,
+    text:{
+         type:String,
+         required:true
     },
     options:{
-        
-        type:[String],
-        required:true,
+       type:[String],
+       required : true   
     },
     rightAnswer:{
-        type:Number,
-        required:true,
-    }
+         type:String,
+         required : true
+    }, 
+});
+
+//quiz schema which contains multiple questions
+const quizSchema = new mongoose.Schema({
+    
+     title :String ,
+     user :{
+        
+         type:mongoose.Schema.Types.ObjectId ,
+         ref :'User'
+     },
+
+     questions : [questionSchema],
+      
 });
 
 const Quiz = mongoose.model('Quiz' , quizSchema);

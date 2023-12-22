@@ -8,6 +8,63 @@
          <a href="/user/sign-up">New User</a>
          <br>
          <a href="/user/sign-in">Login</a>
+         <br>
+         
+         <h1>Create New Quiz</h1>
+
+            <form action="/api/quiz/create-quiz" method="POST">
+                       
+                            <label for="title">Quiz Title :</label>
+                            <input type="text" id="title" name="title" required>
+                            
+                            <div id="originalContent">
+                            <div class="question">
+                                <label for="questionText0">Question Text:</label>
+                                <input type="text" id="questionText0" name="questions[0][text]" required>
+                                <br>
+                                <label for="options0">Options(comma-separated):</label>
+                                <input type="text" id="options0" name="questions[0][options]" required>
+                                <br>
+                                <label for="rightAnswer0">Right Answer Index:</label>
+                                    <input type="text" id="rightAnswer0" name="questions[0][rightAnswer]" required>
+                                </div>
+                                </div>
+                                <div id="questions" style="display: none;"></div>
+                                
+                                <button type="button" onclick="addQuestion(); toggleContent();">Add Question</button>
+                                <button type="submit">Create Quiz</button>
+                            
+                            <script>
+                                    let questionCount = 1;
+                                    
+                                    function addQuestion() {
+                                        const questionsDiv = document.getElementById('questions');
+                                        const newQuestionDiv = document.createElement('div');
+                                        newQuestionDiv.classList.add('question');
+                                    
+                                        newQuestionDiv.innerHTML = `
+                                        <label for="questionText${questionCount}">Question text:</label>
+                                        <input type="text" id="questionText${questionCount}" name="questions[${questionCount}][text]" required>
+                                        <br>
+                                        <label for="options${questionCount}">Options (comma-separated):</label>
+                                        <input type="text" id="options${questionCount}" name="questions[${questionCount}][options]" required>
+                                        <br>
+                                        <label for="correctAnswer${questionCount}">Correct Answer Index:</label>
+                                        <input type="text" id="correctAnswer${questionCount}" name="questions[${questionCount}][rightAnswer]" required>
+                                        `;
+                                    
+                                        questionsDiv.appendChild(newQuestionDiv);
+                                        questionCount++;
+                                    }
+                                    
+                                    function toggleContent() {
+                                        const originalContent = document.getElementById('originalContent');
+                                        const questionsDiv = document.getElementById('questions');
+                                        originalContent.style.display = 'none'; // Hide original content
+                                        questionsDiv.style.display = 'block'; // Show dynamically added questions
+                                    }
+                      </script>
+            </form>
 
     </body>
 </html>
