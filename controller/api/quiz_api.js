@@ -69,9 +69,18 @@ module.exports.createQuiz = async function (req,res){
 
 }
 
-module.exports.index = function(req,res){
-    
-    return res.json(200,{
-        message:"list Of questions"
-    });
+//fetch all quizzes in home page
+module.exports.getAllQuizzes = async function(req,res){
+     
+      try{
+          const quizzes = await Quiz.find({},'title');
+          res.json({quizzes});
+      }
+      catch(err){
+        
+          console.log("error" , err);
+          res.status(500).json({
+               message:'Internal Server Error'
+          });
+      }
 }

@@ -3,12 +3,23 @@ const User = require('../../model/user');
 const jwt = require('jsonwebtoken');
 
 
-module.exports.createUser  = async function(req,res){
+module.exports.loginPage = function(req,res){
     
-    console.log("************");
-    console.log(req.body);
-    console.log("*************");
+      return res.render('user_Login');
+    
 
+}
+
+module.exports.signUp = function(req,res){
+ 
+     return res.render('user_Sign');
+
+}
+
+
+module.exports.createUser  = async function(req,res){
+
+    
    if(req.body.password != req.body.conform_password){
           console.log('conform password does not match');
           return res.json(200 ,{
@@ -47,37 +58,27 @@ module.exports.createUser  = async function(req,res){
 }
 
 
-
 // user login
-module.exports.createSession = async function(req,res){
-    try{
-     
-        let user = await User.findOne({email: req.body.email});
+module.exports.createSession = async function (req, res) {
+    try {
+        let user = await User.findOne({ email: req.body.email });
 
-        if(!user || user.password != req.body.password){ 
-            
-             return res.json(422 ,{
-                 message : "Invalid User name or Password"
-             });
-
+        if (!user || user.password !== req.body.password) {
+            return res.json(422, {
+                message: "Invalid User name or Password"
+            });
         }
 
-        return res.json(200,{
-             
-            message:'sign In successful',
-            data : jwt.sign(user.toJSON(),'something',{expiresIn : 10000})
-        })
-
-
-    }
-    catch(err){
-         
-        console.log("********",err);
-
-        return res.json(500 ,{
-             message : "Internal Server Error"
+        return res.json(200, {
+            message: 'Sign In successful',
+            data: {
+                token: jwt.sign(user.toJSON(), 'something', { expiresIn: '1h' }) // Set token expiration time
+            }
         });
-
+    } catch (err) {
+        console.log("********", err);
+        return res.json(500, {
+            message: "Internal Server Error"
+        });
     }
-    
-} ;
+};
